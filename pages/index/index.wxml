@@ -1,0 +1,62 @@
+<!--index.wxml-->
+<view style='display: {{hidemap}}'>
+<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="17" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width:100%;height:{{view.Height}}px;">
+
+  <!--搜索框-->
+  <cover-view class="search-bar" bindtap='bindInput'>
+    <cover-image class="search-icon" src="/assets/imgs/search.gif"/>
+    <input class="search-input" placeholder="广东省广州市天"></input>
+  </cover-view>
+
+  
+
+  <!--请选择你所在的楼层-->
+  <cover-view class="select-floor-hint" wx:if="{{selected == 0}}">
+    请选择你所在的楼层
+  </cover-view>
+
+  <!--到这儿去-->
+  <cover-view class="to-there" bindtap='goThere' wx:if="{{selected == 1}}">
+    <cover-image class="to-there-icon" src="/assets/imgs/guy.gif"/>
+    <cover-view class="to-there-text">到这儿去</cover-view>
+  </cover-view>
+
+  <!--厕所空闲提醒-->
+  <cover-image class="toilet-alert" wx:if="{{selected == 1}}" src="/assets/imgs/toilet_alert.gif" bindtap='showAlarmForm'/>
+
+  <!--<cover-view id='sidebar'>
+  </cover-view>
+  <cover-view id='floor-select-bar'>
+    <cover-view class='floor-row' wx:for="{{floor}}" bindtap='selectFloor' id='{{item}}'>
+      F{{item}}
+      <cover-image class="floor-state" src="/assets/imgs/guy.gif"/>
+    </cover-view>
+  </cover-view>-->
+  <cover-view id='sidebar'>
+  <cover-view class='upFloorButton' id='upButton' bindtap='tapUpButton'></cover-view>
+  <cover-view id='floor-select-bar'>
+    <cover-view id='floor-number-bar'>
+      <cover-view class='floor-number-unit {{floorHint[item-1]}}' wx:for="{{floors}}" bindtap='selectFloor' id='number{{item}}'>
+      F{{item}}
+      </cover-view>
+    </cover-view>
+    <cover-view id='floor-state-bar'>
+      <cover-view class='floor-state-unit-for' wx:for="{{floors}}">
+        <cover-image id='state{{item}}' class='floor-state-unit' src="/assets/imgs/{{states[inBuilding][item-1]}}.gif"/>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+  <cover-view class='downFloorButton' id='bottomButton' bindtap='tapBottomButton'></cover-view>
+  </cover-view>
+</map>
+</view>
+<view id='alarmForm'>
+    <form bindsubmit="formSubmit" bindreset="formReset">
+      开启厕所空闲时提醒
+      <input name="input{{selected}}"/>
+      <view class="btn-area">
+        <button formType="submit">Submit</button>
+        <button formType="reset">Reset</button>
+      </view>
+    </form>
+</view>

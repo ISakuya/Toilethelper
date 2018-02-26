@@ -1,0 +1,142 @@
+/**index.wxss**/
+
+.search-bar{
+  background-color: #ffffff;
+  margin-top: 19rpx;
+  width: 90%;
+  height: 82rpx;
+  margin-left: 5%;
+  display: flex;
+  border-radius: 15rpx;
+}
+
+.search-icon{
+  margin-left: 17rpx;
+  margin-right: 17rpx;
+  width: 34rpx;
+  height:34rpx;
+  display: flex;
+  align-self: center;
+}
+
+.search-input{
+  width: 100%;
+  display: flex;
+  text-align: left;
+  margin-top: 17rpx;
+  font-size: 34rpx;
+}
+
+.select-floor-hint{
+  position: absolute;
+  background-color: #ffffff;
+  width: 70%;
+  height:82rpx;
+  left: 15%;
+  bottom: 5%;
+  text-align: center;
+  line-height: 82rpx;
+  color: #737373;
+  border-radius: 15rpx;
+  font-size: 36rpx;
+  /*display: none;*/
+}
+
+.to-there{
+  position: absolute;
+  background-color: #ffd24a;
+  width: 32%;
+  height: 255rpx;
+  left: 34%;
+  bottom: 5%;
+  border-radius: 255rpx;
+  /*display: none;*/
+}
+
+.to-there-icon{
+  width: 64rpx;
+  height: 64rpx;
+  margin-left: 37.5%;
+  margin-top: 15%;
+}
+
+.to-there-text{
+  font-size: 36rpx;
+  color:#262626;
+  margin-top: 15%;
+  text-align: center;
+}
+
+.toilet-alert{
+  position: absolute;
+  width:85rpx;
+  height: 85rpx;
+  right: 5%;
+  bottom: 5%;
+  /*display: none;*/
+}
+.upFloorButton{
+  width: 0;
+  height: 0;
+  border-left: 26rpx solid transparent;
+  border-right: 26rpx solid transparent;
+  border-bottom: 52rpx solid #737373;
+}
+.downFloorButton{
+  width: 0;
+  height: 0;
+  border-left: 26rpx solid transparent;
+  border-right: 26rpx solid transparent;
+  border-top: 52rpx solid #737373;
+}
+#floor-select-bar{
+  display: flex;
+  overflow: hidden;
+}
+#floor-number-bar{
+  border-radius: 20rpx;
+  background-color: #ffffff;
+  border: 1rpx solid #737373;
+  width: 52rpx;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-right: 5rpx;
+}
+.floor-number-unit{
+  text-align: center;
+  height: 75rpx;
+  width: 50rpx;
+  line-height: 75rpx;
+}
+.floor-selected{
+  color: #ffd24a;
+}
+.floor-state-unit{
+  height: 75rpx;
+  width: 58rpx;
+}
+.floor-state-unit-for{
+  margin-top: 6rpx;
+}
+#sidebar{
+  position: absolute;
+  top: 40%;
+  left: 5%;
+}
+#alarmForm{
+  margin-top: 5rpx;
+}
+
+.floor-row{
+  display: flex;
+  margin-left: 15rpx;
+  line-height: 75rpx;
+  height: 75rpx;
+  font-size: 30rpx;
+}
+.floor-state{
+  margin-left: 10rpx;
+  line-height: 75rpx;
+  width: 65rpx;
+  height: 75rpx;
+}

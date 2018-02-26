@@ -1,0 +1,7 @@
+<!--pages/search.wxml-->
+<view class="section">
+  <input bindinput="bindInput" placeholder="搜索" focus="true" />
+</view>
+<view bindtouchstart="bindSearch" data-location="{{i.location}}" class="text_box" wx:for="{{tips}}" wx:for-item="i">
+  {{i.name}}
+</view>
