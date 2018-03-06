@@ -19,8 +19,8 @@ Page({
       success: function (res) {
         console.log(res.longitude, res.latitude);
         _this.setData({
-          longitude: 113.405142,
-          latitude: 23.047279,
+          longitude: 113.406142,
+          latitude: 23.046279,
         })
       }
     });
@@ -28,7 +28,8 @@ Page({
   bindInput: function(e){
     let _this = this;
     let amap = new amapFile.AMapWX({ key: '948dc43d12c4bdcf87d4246b41fc195f' });
-    let keywords = e.detail.value; 
+    let keywords = e.detail.value;
+    console.log(this.data.longitude + ',' + this.data.latitude);
     amap.getInputtips({
       keywords: keywords,
       location: this.data.longitude + ',' + this.data.latitude,
@@ -45,8 +46,10 @@ Page({
   },
   bindSearch: function(e){
       console.log(e);
-      app.globalData.searchLongitude = 1;
-      app.globalData.searchLatitude = 1;
+      let location = e.currentTarget.dataset.location.split(',');
+      console.log(location);
+      app.globalData.searchLongitude = location[0];
+      app.globalData.searchLatitude = location[1];
       wx.navigateBack({ });
   },
   /**

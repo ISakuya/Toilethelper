@@ -8,6 +8,7 @@
   margin-left: 5%;
   display: flex;
   border-radius: 15rpx;
+  box-shadow: 2px 2px 5px #888888;
 }
 
 .search-icon{
@@ -50,6 +51,7 @@
   left: 34%;
   bottom: 5%;
   border-radius: 255rpx;
+  box-shadow: 2px 2px 5px #888888;
   /*display: none;*/
 }
 
@@ -73,6 +75,7 @@
   height: 85rpx;
   right: 5%;
   bottom: 5%;
+  box-shadow: 2px 2px 5px #888888;
   /*display: none;*/
 }
 .upFloorButton{

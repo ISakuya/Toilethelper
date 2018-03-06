@@ -203,12 +203,28 @@ Page({
       },
     })*/
     this.mapCtx = wx.createMapContext('map', this);
+
+    let amap = new amapFile.AMapWX({ key: '948dc43d12c4bdcf87d4246b41fc195f' });
+    amap.getRegeo({
+      success: function (data) {
+        console.log(data);
+      },
+      fail: function (info) {
+        //失败回调
+        console.log(info)
+      }
+    })
   },
   onShow: function(){
     this.setData({
       longitude: app.globalData.searchLongitude,
       latitude: app.globalData.searchLatitude
     });
+    if (app.globalData.searchLongitude){
+      this.checkBuilding();
+      this.getSensor(1, this.data.inBuilding);
+    }
+    
   },
   regionchange(e) {
     console.log("regionchange===" + e.type)
