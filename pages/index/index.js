@@ -135,8 +135,10 @@ Page({
             Height: res.windowHeight
           },
           floor: 4,
-          bottomFloor: 1
+          bottomFloor: 1,
+          toThereHeight: res.screenWidth*0.32
         });
+        console.log(res.screenWidth);
       }
     });
     

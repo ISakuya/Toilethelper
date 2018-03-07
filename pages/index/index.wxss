@@ -47,7 +47,7 @@
   position: absolute;
   background-color: #ffd24a;
   width: 32%;
-  height: 255rpx;
+  
   left: 34%;
   bottom: 5%;
   border-radius: 255rpx;
@@ -78,6 +78,17 @@
   box-shadow: 2px 2px 5px #888888;
   /*display: none;*/
 }
+.changeButton{
+  width: 52rpx;
+  position: absolute;
+  top:0;
+  left: 0;
+}
+.buttonWrapper{
+  position: relative;
+  widows: 52rpx;
+  height: 52rpx;
+}
 .upFloorButton{
   width: 0;
   height: 0;
@@ -100,7 +111,7 @@
   border-radius: 20rpx;
   background-color: #ffffff;
   border: 1rpx solid #737373;
-  width: 52rpx;
+  width: 50rpx;
   margin-top: 10rpx;
   margin-bottom: 10rpx;
   margin-right: 5rpx;
@@ -110,13 +121,17 @@
   height: 75rpx;
   width: 50rpx;
   line-height: 75rpx;
+  box-sizing: border-box;
+  z-index: -1;
 }
 .floor-selected{
   color: #ffd24a;
+  background-color: #F5F5F5;
 }
 .floor-state-unit{
   height: 75rpx;
   width: 58rpx;
+  
 }
 .floor-state-unit-for{
   margin-top: 6rpx;

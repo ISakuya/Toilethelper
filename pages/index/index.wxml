@@ -5,7 +5,7 @@
   <!--搜索框-->
   <cover-view class="search-bar" bindtap='bindInput'>
     <cover-image class="search-icon" src="/assets/imgs/search.gif"/>
-    <input class="search-input" placeholder="广东省广州市天"></input>
+    <input class="search-input"></input>
   </cover-view>
 
   <!--请选择你所在的楼层-->
@@ -14,7 +14,7 @@
   </cover-view>
 
   <!--到这儿去-->
-  <cover-view class="to-there" bindtap='goThere' wx:if="{{selected == 1}}">
+  <cover-view class="to-there" bindtap='goThere' wx:if="{{selected == 1}}" style='height: {{toThereHeight}}px'>
     <cover-image class="to-there-icon" src="/assets/imgs/guy.gif"/>
     <cover-view class="to-there-text">到这儿去</cover-view>
   </cover-view>
@@ -31,20 +31,25 @@
     </cover-view>
   </cover-view>-->
   <cover-view id='sidebar'>
-  <cover-view class='upFloorButton' id='upButton' bindtap='tapUpButton'></cover-view>
-  <cover-view id='floor-select-bar'>
-    <cover-view id='floor-number-bar'>
-      <cover-view class='floor-number-unit {{floorHint[item-1]}}' wx:for="{{floors}}" bindtap='selectFloor' id='number{{item}}'>
-      F{{item}}
+    <cover-view class='buttonWrapper'>
+      <cover-image src='/assets/imgs/up_button.png' class='changeButton' id='upButton' bindtap='tapUpButton'/>
+    </cover-view>
+    <cover-view id='floor-select-bar'>
+      <cover-view id='floor-number-bar'>
+        <cover-view class='floor-number-unit {{floorHint[item-1]}}' wx:for="{{floors}}" bindtap='selectFloor' id='number{{item}}'>
+        F{{item}}
+        </cover-view>
+      </cover-view>
+      <cover-view id='floor-state-bar'>
+        <cover-view class='floor-state-unit-for' wx:for="{{floors}}">
+          <cover-image id='state{{item}}' class='floor-state-unit' src="/assets/imgs/{{states[inBuilding][item-1]}}.gif"/>
+        </cover-view>
       </cover-view>
     </cover-view>
-    <cover-view id='floor-state-bar'>
-      <cover-view class='floor-state-unit-for' wx:for="{{floors}}">
-        <cover-image id='state{{item}}' class='floor-state-unit' src="/assets/imgs/{{states[inBuilding][item-1]}}.gif"/>
-      </cover-view>
+    <cover-view class='buttonWrapper'>
+      <cover-image src='/assets/imgs/down_button.png' class='changeButton' id='bottomButton' bindtap='tapBottomButton'/>
     </cover-view>
-  </cover-view>
-  <cover-view class='downFloorButton' id='bottomButton' bindtap='tapBottomButton'></cover-view>
+    
   </cover-view>
 </map>
 </view>
