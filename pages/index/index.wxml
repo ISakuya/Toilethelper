@@ -13,14 +13,16 @@
     请选择你所在的楼层
   </cover-view>
 
-  <!--到这儿去-->
+  <!--到这儿去
   <cover-view class="to-there" bindtap='goThere' wx:if="{{selected == 1}}" style='height: {{toThereHeight}}px'>
     <cover-image class="to-there-icon" src="/assets/imgs/guy.gif"/>
     <cover-view class="to-there-text">到这儿去</cover-view>
   </cover-view>
-
+-->
+  <cover-image class="to-there" bindtap='goThere' wx:if="{{selected == 1}}" style='height: {{toThereHeight}}px' src='/assets/imgs/to_there.jpg'></cover-image>
+  
   <!--厕所空闲提醒-->
-  <cover-image class="toilet-alert" wx:if="{{selected == 1}}" src="/assets/imgs/toilet_alert.gif" bindtap='showAlarmForm'/>
+  <cover-image class="toilet-alert" wx:if="{{selected == 1}}" src="/assets/imgs/toilet_alert.png" bindtap='showAlarmForm'/>
 
   <!--<cover-view id='sidebar'>
   </cover-view>
@@ -53,13 +55,13 @@
   </cover-view>
 </map>
 </view>
-<view id='alarmForm'>
-    <form bindsubmit="formSubmit" bindreset="formReset">
-      开启厕所空闲时提醒
-      <input name="input{{selected}}"/>
+<view id='formView'>
+    <form bindsubmit="formSubmit" bindreset="formReset" id='alarmForm' report-submit='true'>
+      <view>开启该厕所空闲时提醒</view>
+      <input name="input{{selectedMarker}}"/>
       <view class="btn-area">
-        <button formType="submit">Submit</button>
-        <button formType="reset">Reset</button>
+        <button formType="submit">确定</button>
+        <button formType="reset">返回</button>
       </view>
     </form>
 </view>

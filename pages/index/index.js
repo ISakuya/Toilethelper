@@ -10,10 +10,13 @@ Page({
     longitude: "",
     markers: [],
     floors: [],
+    //选择的楼层
     selected: 0,
     states: [[4,4,4]],
+    //选择的传感器
     selectedMarker: -1,
     floorHint: [],
+    //所在建筑物
     inBuilding: 0,
     controls: [
       //三种拥挤程度图示
@@ -31,6 +34,7 @@ Page({
     ]
   },
   getSensor: function (floor, buildingId){
+    //在地图上设置建筑物该层的传感器marker
     let _this = this;
     let markerToShow = [];
     for (let i = 0;i < _this.data.sensors.length;i++){
@@ -52,6 +56,7 @@ Page({
     //console.log(this.data.markers);
   },
   selectFloor: function(e){
+    //选择楼层动作
     if (this.data.selected == 0)
       this.setData({
         selected: 1
@@ -120,8 +125,8 @@ Page({
         bid = i;
       }
       this.setData({ inBuilding: bid });
-      console.log(distance);
-      console.log(this.data.inBuilding);
+      console.log("distance to " + i + ' is ' + temp);
+      console.log("inBuilding is " + this.data.inBuilding);
     }
   },
   onLoad: function () {
@@ -144,11 +149,28 @@ Page({
     
     wx.getLocation({
       success: function (res) {
-        console.log(res.longitude, res.latitude);
+        console.log('当前位置： ' + res.longitude, res.latitude);
         _this.setData({
           longitude: 113.406142,
           latitude: 23.046279,
         });
+      }
+    });
+
+    wx.login({
+      success: function (res) {
+        if (res.code) {
+          //get openid
+          wx.request({
+            url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wxf9d3461c275c0f04&secret=0403dc5e4f00742ff19d564c372c9b67&js_code='+res.code+'&grant_type=authorization_code',
+            success:function(res){
+              _this.setData({ openid: res.data.openid });
+              console.log(res.data.openid);
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
       }
     });
 
@@ -167,13 +189,13 @@ Page({
           marker.latitude = building.latitude;
           marker.width = 20;
           marker.height = 20;
-          marker.iconPath = '/assets/imgs/toilet_alert.gif';
+          marker.iconPath = '/assets/imgs/toilet_alert.png';
           buildingMarkers.push(marker);
         }
         _this.setData({buildingMarkers: buildingMarkers});
-        console.log(_this.data.buildingMarkers);
+        console.log('markers: ', _this.data.buildingMarkers);
 
-        console.log(_this.data.buildings);
+        console.log('buildings: ', _this.data.buildings);
         _this.checkBuilding();
         wx.request({
           url: 'https://tolfinder.applinzi.com/test.php',
@@ -209,13 +231,34 @@ Page({
     let amap = new amapFile.AMapWX({ key: '948dc43d12c4bdcf87d4246b41fc195f' });
     amap.getRegeo({
       success: function (data) {
-        console.log(data);
+        console.log('amapGetRegeo: ' , data);
       },
       fail: function (info) {
         //失败回调
         console.log(info)
       }
-    })
+    });
+
+
+    wx.request({
+      url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxf9d3461c275c0f04&secret=0403dc5e4f00742ff19d564c372c9b67',
+      success: function(res){
+        let at = res.data.access_token;
+        console.log("AT: ", at);
+        wx.request({
+          url: 'https://api.weixin.qq.com/cgi-bin/wxopen/template/add?access_token=' + at,
+          method: 'POST',
+          data:{
+            access_token: at,
+            id: "AT0004",
+            keyword_id_list: [1, 34]
+          },
+          success: function(res){
+            console.log('Template', res);
+          }
+        });
+      }
+    });
   },
   onShow: function(){
     this.setData({
@@ -279,10 +322,24 @@ Page({
     })
   },
   formSubmit: function (e) {
+    let _this = this;
     console.log('form发生了submit事件，携带数据为：', e.detail.value);
-    this.setData({ hidemap: 'block' })
+    this.setData({ hidemap: 'block' });
+    let fid = e.detail.formId;
+    wx.request({
+      url: 'https://tolfinder.applinzi.com/message.php',
+      data:{
+        sid: _this.data.selectedMarker,
+        oid: _this.data.openid,
+        fid: fid
+      },
+      success: function (res) {
+        console.log(res);
+      }
+    });
+    console.log(e.detail.formId);
   },
   formReset: function () {
-    console.log('form发生了reset事件')
+    this.setData({ hidemap: 'block' });
   }
 })
