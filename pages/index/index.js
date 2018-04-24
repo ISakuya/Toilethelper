@@ -9,12 +9,14 @@ Page({
     latitude: "",
     longitude: "",
     markers: [],
+    //左栏数组
     floors: [],
     //选择的楼层
     selected: 0,
     states: [[4,4,4]],
     //选择的传感器
     selectedMarker: -1,
+    //操作左栏选中状态
     floorHint: [],
     //所在建筑物
     inBuilding: 0,
@@ -49,6 +51,7 @@ Page({
       marker.iconPath = '/assets/imgs/toilet_icon.png';
       markerToShow.push(marker);
     }
+
     this.setData({
       markers: markerToShow.concat(this.data.buildingMarkers),
       selectedMarker: markerToShow[0].id
@@ -57,6 +60,7 @@ Page({
   },
   selectFloor: function(e){
     //选择楼层动作
+    this.getSensorData();
     if (this.data.selected == 0)
       this.setData({
         selected: 1
@@ -72,14 +76,13 @@ Page({
     //console.log(this.data.floorHint);
   },
   setFloors: function(){
+    //设置左栏数字
     let temp = [];
     for(let i=this.data.topFloor;i >= this.data.bottomFloor;i--) temp.push(i);
     this.setData({floors: temp});
   },
-  setState: function(){
-
-  },
   tapUpButton: function(){
+    //左栏上三角动作
     if (this.data.topFloor == this.data.floor) return;
     this.setData({ topFloor: this.data.topFloor + 1, bottomFloor: this.data.bottomFloor + 1});
     this.setFloors();
@@ -90,6 +93,7 @@ Page({
     this.setFloors();
   },
   goThere: function(){
+    //到这儿去
     console.log(1);
     let longitude, latitude;
     for (let i in this.data.markers) {
@@ -105,15 +109,18 @@ Page({
     });
   },
   bindInput: function(){
+    //搜索动作
     wx.navigateTo({
       url: '/pages/search/search?q=1',
     })
     console.log(this.data.longitude + ',' + this.data.latitude);
   },
   showAlarmForm: function(){
+    //点击提醒
     this.setData({ hidemap:'none' })
   },
   checkBuilding: function(){
+    //检查最近建筑物
     let distance = 0.00001;
     let bid = -1;
     for(let i in this.data.buildings){
@@ -128,6 +135,19 @@ Page({
       console.log("distance to " + i + ' is ' + temp);
       console.log("inBuilding is " + this.data.inBuilding);
     }
+  },
+  getSensorData: function(){
+    var _this = this;
+    wx.request({
+      url: 'https://tolfinder.applinzi.com/test.php',
+      success: function (res) {
+        let states = [];
+        for (let i in _this.data.buildings) states[i] = [];
+        for (let i = 0; i < res.data.length; i++)
+          states[res.data[i].buildingid][res.data[i].floor - 1] = res.data[i].state;
+        _this.setData({ sensors: res.data, states: states });
+      }
+    })
   },
   onLoad: function () {
     let _this = this;
@@ -175,6 +195,7 @@ Page({
     });
 
     wx.request({
+      //获取数据
       url: 'https://tolfinder.applinzi.com/getBuilding.php',
       success: function (res) {
         _this.setData({ buildings: res.data });
@@ -192,7 +213,7 @@ Page({
           marker.iconPath = '/assets/imgs/toilet_alert.png';
           buildingMarkers.push(marker);
         }
-        _this.setData({buildingMarkers: buildingMarkers});
+        _this.setData({buildingMarkers: buildingMarkers, floor:res.data[0].floor});
         console.log('markers: ', _this.data.buildingMarkers);
 
         console.log('buildings: ', _this.data.buildings);
@@ -228,6 +249,7 @@ Page({
     })*/
     this.mapCtx = wx.createMapContext('map', this);
 
+    //useless
     let amap = new amapFile.AMapWX({ key: '948dc43d12c4bdcf87d4246b41fc195f' });
     amap.getRegeo({
       success: function (data) {
@@ -238,29 +260,10 @@ Page({
         console.log(info)
       }
     });
-
-
-    wx.request({
-      url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxf9d3461c275c0f04&secret=0403dc5e4f00742ff19d564c372c9b67',
-      success: function(res){
-        let at = res.data.access_token;
-        console.log("AT: ", at);
-        wx.request({
-          url: 'https://api.weixin.qq.com/cgi-bin/wxopen/template/add?access_token=' + at,
-          method: 'POST',
-          data:{
-            access_token: at,
-            id: "AT0004",
-            keyword_id_list: [1, 34]
-          },
-          success: function(res){
-            console.log('Template', res);
-          }
-        });
-      }
-    });
   },
+
   onShow: function(){
+    //从搜索页返回时设置坐标为搜索时选中值
     this.setData({
       longitude: app.globalData.searchLongitude,
       latitude: app.globalData.searchLatitude
@@ -269,10 +272,7 @@ Page({
       this.checkBuilding();
       this.getSensor(1, this.data.inBuilding);
     }
-    
-  },
-  regionchange(e) {
-    console.log("regionchange===" + e.type)
+    this.getSensorData();
   },
   //点击markers
   markertap(e) {
@@ -280,37 +280,18 @@ Page({
     //console.log(e);
     else{
       let selectedBuilding = this.data.buildings[e.markerId[1]];
+      console.log(e.markerId[1]);
       this.setData({
           longitude: selectedBuilding.longitude,
           latitude: selectedBuilding.latitude,
-          inBuilding: e.markerId[1]
+          inBuilding: e.markerId[1],
+          topFloor: 3,
+          bottomFloor:1,
+          floor: selectedBuilding.floor
        });
        console.log(this.data.longitude, this.data.latitude);
+       this.setFloors();
        this.getSensor(1, this.data.inBuilding);
-    }
-    //显示选项
-    /*wx.showActionSheet({
-      itemList: ["A"],
-      success:function(res){
-        console.log(res.tapIndex)
-      },
-      fail:function(res){
-        console.log(res.errMsg)
-      }
-    })*/
-  },
-  //点击缩放按钮动态请求数据
-  controltap(e) {
-    let that = this;
-    console.log("scale===" + this.data.scale)
-    if (e.controlId === 2) {
-      that.setData({
-        scale: --this.data.scale
-      })
-    } else if (e.controlId === 3) {
-      that.setData({
-        scale: ++this.data.scale
-      })
     }
   },
   getUserInfo: function (e) {
@@ -322,6 +303,7 @@ Page({
     })
   },
   formSubmit: function (e) {
+    //提醒表单
     let _this = this;
     console.log('form发生了submit事件，携带数据为：', e.detail.value);
     this.setData({ hidemap: 'block' });

@@ -19,8 +19,8 @@ Page({
       success: function (res) {
         console.log(res.longitude, res.latitude);
         _this.setData({
-          longitude: 113.406142,
-          latitude: 23.046279,
+          longitude: res.longitude,
+          latitude: res.latitude,
         })
       }
     });
@@ -42,7 +42,7 @@ Page({
         }
       }
     });
-    console.log(tips);
+    //console.log(tips);
   },
   bindSearch: function(e){
       console.log(e);

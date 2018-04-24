@@ -71,10 +71,10 @@
 
 .toilet-alert{
   position: absolute;
-  width:85rpx;
-  height: 85rpx;
+  width: 100rpx;
+  height: 100rpx;
   right: 5%;
-  bottom: 5%;
+  bottom: 10%;
   /*display: none;*/
 }
 .changeButton{
@@ -107,19 +107,21 @@
   overflow: hidden;
 }
 #floor-number-bar{
-  border-radius: 20rpx;
+  border-radius: 12rpx;
   background-color: #ffffff;
+  color: #737373;
+  font-size: 0.8rem;
   border: 1rpx solid #737373;
-  width: 50rpx;
+  width: 60rpx;
   margin-top: 10rpx;
   margin-bottom: 10rpx;
   margin-right: 5rpx;
 }
 .floor-number-unit{
   text-align: center;
-  height: 75rpx;
-  width: 50rpx;
-  line-height: 75rpx;
+  height: 66rpx;
+  width: 60rpx;
+  line-height: 66rpx;
   box-sizing: border-box;
   z-index: -1;
 }
@@ -128,8 +130,8 @@
   background-color: #F5F5F5;
 }
 .floor-state-unit{
-  height: 75rpx;
-  width: 58rpx;
+  height: 66rpx;
+  width: 60rpx;
   
 }
 .floor-state-unit-for{
