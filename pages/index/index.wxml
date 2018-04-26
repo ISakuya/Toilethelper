@@ -1,29 +1,35 @@
 <!--index.wxml-->
 <view style='display: {{hidemap}}'>
-<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="18" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width:100%;height:{{view.Height}}px;">
+<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="20" controls="{{controls}}" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" show-location style="width:100%;height:{{view.Height}}px;">
 
-  <!--搜索框-->
+  <!--搜索框
   <cover-view class="search-bar" bindtap='bindInput'>
     <cover-image class="search-icon" src="/assets/imgs/search.gif"/>
     <input class="search-input"></input>
   </cover-view>
+  -->
 
-  <!--请选择你所在的楼层-->
+  <cover-view id='recommendButton' bindtap='recommend' style='opacity:{{buttonOpacity[0]}}' bind:touchstart='buttonsTS' bind:touchend='buttonsTE'>
+    附近推荐洗手间
+  </cover-view>
+
+  <!--请选择你所在的楼层
   <cover-view class="select-floor-hint" wx:if="{{selected == 0}}">
     请选择你所在的楼层
   </cover-view>
-
+  -->
   <!--到这儿去
   <cover-view class="to-there" bindtap='goThere' wx:if="{{selected == 1}}" style='height: {{toThereHeight}}px'>
     <cover-image class="to-there-icon" src="/assets/imgs/guy.gif"/>
     <cover-view class="to-there-text">到这儿去</cover-view>
   </cover-view>
 -->
-  <cover-image class="to-there" bindtap='goThere' wx:if="{{selected == 1}}" style='height: {{toThereHeight}}px' src='/assets/imgs/to_there.jpg'></cover-image>
+  <cover-image id="toThere" bindtap='toThere' style='height: {{toThereHeight}}px;opacity: {{buttonOpacity[1]}}' bind:touchstart='buttonsTS' bind:touchend='buttonsTE' src='/assets/imgs/to_there.png'></cover-image>
   
   <!--厕所空闲提醒-->
-  <cover-image class="toilet-alert" wx:if="{{selected == 1}}" src="/assets/imgs/toilet_alert.png" bindtap='showAlarmForm'/>
+  <cover-image id="toiletAlert" style='opacity:{{buttonOpacity[2]}}' src="/assets/imgs/toilet_alert.png" bindtap='showAlarmForm' bind:touchstart='buttonsTS' bind:touchend='buttonsTE'/>
 
+  <cover-image id="locate" src="/assets/imgs/locate.png" style='opacity:{{buttonOpacity[3]}}' bindtap='locate' bind:touchstart='buttonsTS' bind:touchend='buttonsTE'/>
   <!--<cover-view id='sidebar'>
   </cover-view>
   <cover-view id='floor-select-bar'>
@@ -33,13 +39,11 @@
     </cover-view>
   </cover-view>-->
   <cover-view id='sidebar'>
-    <cover-view class='buttonWrapper'>
-      <cover-image src='/assets/imgs/up_button.png' class='changeButton' id='upButton' bindtap='tapUpButton'/>
-    </cover-view>
+
     <cover-view id='floor-select-bar'>
       <cover-view id='floor-number-bar'>
         <cover-view class='floor-number-unit {{floorHint[item-1]}}' wx:for="{{floors}}" bindtap='selectFloor' id='number{{item}}'>
-        F{{item}}
+          F{{item}}
         </cover-view>
       </cover-view>
       <cover-view id='floor-state-bar'>
@@ -47,9 +51,6 @@
           <cover-image id='state{{item}}' class='floor-state-unit' src="/assets/imgs/{{states[inBuilding][item-1]}}.gif"/>
         </cover-view>
       </cover-view>
-    </cover-view>
-    <cover-view class='buttonWrapper'>
-      <cover-image src='/assets/imgs/down_button.png' class='changeButton' id='bottomButton' bindtap='tapBottomButton'/>
     </cover-view>
     
   </cover-view>

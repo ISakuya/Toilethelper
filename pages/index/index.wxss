@@ -43,16 +43,13 @@
   /*display: none;*/
 }
 
-.to-there{
+#toThere{
   position: absolute;
   background-color: #ffd24a;
   width: 32%;
-  
   left: 34%;
-  bottom: 5%;
+  bottom: 8%;
   border-radius: 255rpx;
-  
-  /*display: none;*/
 }
 
 .to-there-icon{
@@ -69,13 +66,20 @@
   text-align: center;
 }
 
-.toilet-alert{
+#toiletAlert{
   position: absolute;
   width: 100rpx;
   height: 100rpx;
   right: 5%;
-  bottom: 10%;
-  /*display: none;*/
+  bottom: 13%;
+}
+
+#locate{
+  position: absolute;
+  width: 100rpx;
+  height: 100rpx;
+  left: 5%;
+  bottom: 13%;
 }
 .changeButton{
   width: 52rpx;
@@ -110,18 +114,15 @@
   border-radius: 12rpx;
   background-color: #ffffff;
   color: #737373;
-  font-size: 0.8rem;
-  border: 1rpx solid #737373;
-  width: 60rpx;
-  margin-top: 10rpx;
-  margin-bottom: 10rpx;
+  border: 1rpx solid #b2b9c6;
+  width: 70rpx;
   margin-right: 5rpx;
 }
 .floor-number-unit{
   text-align: center;
-  height: 66rpx;
-  width: 60rpx;
-  line-height: 66rpx;
+  height: 75rpx;
+  width: 70rpx;
+  line-height: 75rpx;
   box-sizing: border-box;
   z-index: -1;
 }
@@ -130,16 +131,16 @@
   background-color: #F5F5F5;
 }
 .floor-state-unit{
-  height: 66rpx;
-  width: 60rpx;
+  height: 75rpx;
+  width: 55rpx;
   
 }
 .floor-state-unit-for{
-  margin-top: 6rpx;
+
 }
 #sidebar{
   position: absolute;
-  top: 40%;
+  top: 30%;
   left: 5%;
 }
 #formView{
@@ -164,4 +165,19 @@ button{
   line-height: 75rpx;
   width: 65rpx;
   height: 75rpx;
+}
+
+#recommendButton{
+  width: 310rpx;
+  height: 80rpx;
+  line-height:80rpx;
+  text-align: center;
+  border-radius: 9rpx;
+  margin: auto;
+  margin-top: 40rpx;
+  background-color: #FFD249;
+}
+
+.opacityButton{
+  opacity: 0.8;
 }
